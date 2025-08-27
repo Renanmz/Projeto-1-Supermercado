@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Título */
+header {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 20px;
+}
+
+/* Parte central */
+#menu-central {
+    display: flex;
+    flex: 1;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+/* Coluna de produto */
+#produto {
+    width: 220px;
+    border-right: 2px solid black;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#foto {
+    width: 100px;
+    height: 100px;
+    border: 2px solid black;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Lista de produtos */
+#lista-produtos {
+    flex: 1;
+    padding: 15px;
+}
+
+#tabela-produtos {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tabela-produtos th,
+#tabela-produtos td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+/* Menu inferior */
+#menu-inferior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 2px solid black;
+    padding: 15px;
+    background: #f1f1f1;
+}
+
+#opcoes button {
+    width: 100%;
+    padding: 20px;              /* deixa o botão grande */
+    font-size: 1.2rem;          /* texto maior */
+    font-weight: bold;
+    background: #4CAF50;        /* verde para destaque */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#opcoes button + button {
+    background: #f44336;        /* vermelho para excluir */
+}
+
+#opcoes button:nth-child(3) {
+    background: #2196F3;        /* azul (Nova Venda) */
+}
+
+#opcoes button:hover {
+    opacity: 0.85;
+    transform: scale(1.02);     /* leve efeito ao passar o mouse */
+}
+
+/* Área de transação */
+#transacao {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Área de preço total */
+#preco-total {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+    align-items: center;
+}
+
+/* Inputs grandes para caixa registradora */
+#menu-inferior input {
+    font-size: 1.5rem;   /* deixa o texto grande */
+    font-weight: bold;
+    padding: 10px;
+    text-align: right;
+    width: 220px;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background: #fffbea;
+}
+
+/* Destaque no preço total */
+#preco-total input {
+    font-size: 2rem;
+    color: darkred;
+    width: 260px;
+    background: #ffe5e5;
+}
+
+/* Labels maiores */
+#transacao label,
+#preco-total label {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+/* Modal de fundo */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Conteúdo do modal */
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    min-width: 250px;
+    text-align: center;
+}
+
+.modal-buttons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+}

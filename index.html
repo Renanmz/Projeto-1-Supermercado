@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supermercado</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    <header id="titulo">
+        <h1>Supermercado</h1>
+    </header>
+
+    <main id="menu-central">
+        <!-- Lado esquerdo: produto -->
+        <section id="produto">
+            <div id="foto">Foto</div>
+
+            <label>Código</label>
+            <input type="text" id="input-codigo">
+
+            <label>Nome</label>
+            <input type="text" id="input-nome" readonly>
+
+            <label>Preço</label>
+            <input type="text" id="input-preco" readonly>
+
+            <label>Unidades</label>
+            <input type="text" id="input-unidade">
+
+            <button id="botao-adicionar">Adicionar</button>
+        </section>
+
+        <!-- Centro: lista de produtos -->
+        <section id="lista-produtos">
+            <table id="tabela-produtos">
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Código</th>
+                        <th>Produto</th>
+                        <th>Valor</th>
+                        <th>Unidades</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Parte inferior -->
+    <footer id="menu-inferior">
+        <div id="opcoes">
+            <button id="btn-pesquisar">Pesquisar Produto</button>
+            <button id="btn-excluir">Excluir Item</button>
+            <button id="btn-nova-venda">Nova Venda</button>
+        </div>
+
+        <div id="transacao">
+            <label>Total recebido</label>
+            <input type="text" id="input-total-recebido">
+
+            <label>Troco</label>
+            <input type="text" id="input-troco" readonly>
+        </div>
+
+        <div id="preco-total">
+            <label>Preço total</label>
+            <input type="text" id="input-preco-total" readonly>
+        </div>
+    </footer>
+
+    <!-- Modal Excluir Item -->
+    <div id="modal-excluir" class="modal">
+        <div class="modal-content">
+            <h3>Excluir Item</h3>
+            <label for="numero-excluir">Digite o Nº do produto:</label>
+            <input type="number" id="numero-excluir">
+            <div class="modal-buttons">
+                <button id="confirmar-excluir">Confirmar</button>
+                <button id="cancelar-excluir">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
