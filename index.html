@@ -16,7 +16,9 @@
     <main id="menu-central">
         <!-- Lado esquerdo: produto -->
         <section id="produto">
-            <div id="foto">Foto</div>
+            <div id="foto">
+                <img id="foto-produto" src="" alt="">
+            </div>
 
             <label>Código</label>
             <input type="text" id="input-codigo">
@@ -70,6 +72,7 @@
         <div id="preco-total">
             <label>Preço total</label>
             <input type="text" id="input-preco-total" readonly>
+            <button id="btn-efetuar-compra">Efetuar Compra</button>
         </div>
     </footer>
 
@@ -85,6 +88,18 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal de Pesquisa -->
+<div id="modal-pesquisa" class="modal">
+  <div class="modal-conteudo">
+    <h2>Pesquisar Produto</h2>
+    <input type="text" id="campo-pesquisa" placeholder="Digite o nome do produto..." />
+
+    <div id="grid-pesquisa"></div>
+
+    <button id="fechar-pesquisa">Fechar</button>
+  </div>
+</div>
 
     <script src="script.js"></script>
 </body>

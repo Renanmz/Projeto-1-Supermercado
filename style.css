@@ -48,6 +48,12 @@ header {
     justify-content: center;
 }
 
+#foto img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* mantém proporção sem cortar */
+}
+
 /* Lista de produtos */
 #lista-produtos {
     flex: 1;
@@ -159,7 +165,7 @@ header {
     align-items: center;
 }
 
-/* Conteúdo do modal */
+/* Conteúdo do modal padrão (excluir item etc) */
 .modal-content {
     background: white;
     padding: 20px;
@@ -172,4 +178,109 @@ header {
     margin-top: 10px;
     display: flex;
     justify-content: space-around;
+}
+
+#tabela-pesquisa th, #tabela-pesquisa td {
+    padding: 8px;
+    text-align: center;
+}
+
+#tabela-pesquisa button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* ===== NOVO: Modal de pesquisa em GRID ===== */
+
+#modal-pesquisa .modal-conteudo {
+    background: #fff;
+    padding: 20px;
+    width: 80%;
+    max-width: 900px;
+    max-height: 90vh;   /* impede estourar tela */
+    overflow: hidden;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#campo-pesquisa {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+}
+
+/* Grid de produtos */
+#grid-pesquisa {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+    overflow-y: auto;   /* scroll vertical */
+    padding-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+/* Cartão de produto */
+.card-produto {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.card-produto strong {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.card-produto button {
+    margin-top: auto;
+    padding: 5px 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.card-produto button:hover {
+    background: #0056b3;
+}
+
+.card-produto img {
+    width: 100px;       /* largura fixa */
+    height: 100px;      /* altura fixa */
+    object-fit: contain; /* mantém proporção sem cortar */
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;   /* fundo branco para não ficar transparente */
+}
+
+#btn-efetuar-compra {
+    margin-top: 10px;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: #2196F3;  /* mesmo azul do Nova Venda */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 100%;
+}
+
+#btn-efetuar-compra:hover {
+    opacity: 0.85;
+    transform: scale(1.02);
 }

@@ -10,39 +10,47 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputTotalRecebido = document.getElementById("input-total-recebido");
     const inputTroco = document.getElementById("input-troco");
 
+    // imagem do produto
+    const fotoProduto = document.getElementById("foto-produto");
+
+    // limpa valores ao carregar página
     inputPrecoTotal.value = "";
     inputTotalRecebido.value = "";
     inputTroco.value = "";
 
-    const botaoExcluir = document.querySelector("#opcoes button:nth-child(2)"); // botão "Excluir item"
+    // Botões e modais
+    const botaoExcluir = document.querySelector("#opcoes button:nth-child(2)");
     const modalExcluir = document.getElementById("modal-excluir");
     const inputNumeroExcluir = document.getElementById("numero-excluir");
     const btnConfirmarExcluir = document.getElementById("confirmar-excluir");
     const btnCancelarExcluir = document.getElementById("cancelar-excluir");
 
+    const botaoNovaVenda = document.querySelector("#opcoes button:nth-child(3)");
+
+    // ---- Pesquisa de Produto ----
+    const botaoPesquisar = document.querySelector("#opcoes button:nth-child(1)");
+    const modalPesquisa = document.getElementById("modal-pesquisa");
+    const tabelaPesquisa = document.querySelector("#tabela-pesquisa tbody");
+    const campoPesquisa = document.getElementById("campo-pesquisa");
+    const btnFecharPesquisa = document.getElementById("fechar-pesquisa");
+
     let produtosJSON = [];
     let precoTotal = 0;
 
-    const botaoNovaVenda = document.querySelector("#opcoes button:nth-child(3)");
-
     // Nova Venda - limpa tudo
     botaoNovaVenda.addEventListener("click", () => {
-        // Limpa tabela
         tabela.innerHTML = "";
-
-        // Reseta totais
         precoTotal = 0;
         inputPrecoTotal.value = "";
         inputTotalRecebido.value = "";
         inputTroco.value = "";
 
-        // Reseta inputs de produto
         inputCodigo.value = "";
         inputNome.value = "";
         inputPreco.value = "";
         inputUnidade.value = "";
-
-        // Foca no código para já começar outra venda
+        fotoProduto.src = ""; // limpa a imagem
+        fotoProduto.style.display = "none";
         inputCodigo.focus();
     });
 
@@ -54,17 +62,32 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(err => console.error("Erro ao carregar JSON:", err));
 
+    // Função auxiliar para preencher os campos + imagem
+    function preencherProduto(produto) {
+        inputNome.value = produto.Nome;
+        inputPreco.value = produto.Preco.toFixed(2);
+
+        if (produto.Imagem) {
+            fotoProduto.src = produto.Imagem;
+            fotoProduto.style.display = "block";
+        } else {
+            fotoProduto.src = "";
+            fotoProduto.style.display = "none";
+        }
+    }
+
     // Buscar produto ao digitar código
     inputCodigo.addEventListener("change", () => {
         const codigo = inputCodigo.value.trim();
         const produto = produtosJSON.find(p => p.Codigo === codigo);
 
         if (produto) {
-            inputNome.value = produto.Nome;
-            inputPreco.value = produto.Preco.toFixed(2);
+            preencherProduto(produto);
         } else {
             inputNome.value = "";
             inputPreco.value = "";
+            fotoProduto.src = "";
+            fotoProduto.style.display = "none";
             alert("Produto não encontrado!");
         }
     });
@@ -95,21 +118,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         tabela.appendChild(row);
 
-        // Atualiza o preço total da compra
         precoTotal += total;
         inputPrecoTotal.value = "R$ " + precoTotal.toFixed(2);
 
-        // Reorganiza números da tabela
         atualizarNumeros();
 
-        // Limpar campos
         inputCodigo.value = "";
         inputNome.value = "";
         inputPreco.value = "";
         inputUnidade.value = "";
+        fotoProduto.src = ""; // limpa a imagem depois de adicionar
+        fotoProduto.style.display = "none";
         inputCodigo.focus();
 
-        // Recalcular troco se já houver valor recebido
         calcularTroco();
     });
 
@@ -130,23 +151,21 @@ document.addEventListener("DOMContentLoaded", () => {
     function atualizarNumeros() {
         const linhas = tabela.querySelectorAll("tr");
         linhas.forEach((linha, index) => {
-            linha.cells[0].textContent = index + 1;
+            linha.cells[0].textContent = (index + 1).toString().padStart(4, "0");
         });
     }
 
-    // Abrir modal de exclusão
+    // ---- Exclusão ----
     botaoExcluir.addEventListener("click", () => {
         modalExcluir.style.display = "flex";
         inputNumeroExcluir.value = "";
         inputNumeroExcluir.focus();
     });
 
-    // Cancelar exclusão
     btnCancelarExcluir.addEventListener("click", () => {
         modalExcluir.style.display = "none";
     });
 
-    // Confirmar exclusão
     btnConfirmarExcluir.addEventListener("click", () => {
         const numero = parseInt(inputNumeroExcluir.value);
         const linhas = tabela.querySelectorAll("tr");
@@ -166,5 +185,56 @@ document.addEventListener("DOMContentLoaded", () => {
         calcularTroco();
 
         modalExcluir.style.display = "none";
+    });
+
+    // ---- Pesquisa de Produto ----
+    botaoPesquisar.addEventListener("click", () => {
+        modalPesquisa.style.display = "flex";
+        renderizarTabelaPesquisa(produtosJSON);
+        campoPesquisa.value = "";
+        campoPesquisa.focus();
+    });
+
+    btnFecharPesquisa.addEventListener("click", () => {
+        modalPesquisa.style.display = "none";
+    });
+
+    function renderizarTabelaPesquisa(lista) {
+        const grid = document.getElementById("grid-pesquisa");
+        grid.innerHTML = "";
+
+        lista.forEach(prod => {
+            const card = document.createElement("div");
+            card.className = "card-produto";
+            card.innerHTML = `
+                ${prod.Imagem ? `<img src="${prod.Imagem}" alt="${prod.Nome}">` : ""}
+                <strong>${prod.Nome}</strong>
+                <p>Código: ${prod.Codigo}</p>
+                <p>Preço: R$ ${prod.Preco.toFixed(2)}</p>
+                <button>Selecionar</button>
+            `;
+
+            card.querySelector("button").addEventListener("click", () => {
+                inputCodigo.value = prod.Codigo;
+                preencherProduto(prod);
+                modalPesquisa.style.display = "none";
+                inputUnidade.focus();
+            });
+
+            grid.appendChild(card);
+        });
+    }
+
+    campoPesquisa.addEventListener("input", () => {
+        const termo = campoPesquisa.value.toLowerCase();
+        const filtrados = produtosJSON.filter(p => p.Nome.toLowerCase().includes(termo));
+        renderizarTabelaPesquisa(filtrados);
+    });
+
+    const botaoEfetuarCompra = document.getElementById("btn-efetuar-compra");
+
+    // Faz o mesmo que "Nova Venda"
+    botaoEfetuarCompra.addEventListener("click", () => {
+        botaoNovaVenda.click();
     });
 });
