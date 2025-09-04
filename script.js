@@ -83,6 +83,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (produto) {
             preencherProduto(produto);
+            inputUnidade.focus(); 
+            
         } else {
             inputNome.value = "";
             inputPreco.value = "";
@@ -151,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function atualizarNumeros() {
         const linhas = tabela.querySelectorAll("tr");
         linhas.forEach((linha, index) => {
-            linha.cells[0].textContent = (index + 1).toString().padStart(4, "0");
+            linha.cells[0].textContent = index + 1;
         });
     }
 
